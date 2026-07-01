@@ -1,0 +1,12 @@
+# Terraform state may contain secrets (e.g. the generated DB password) — never commit it.
+*.tfstate
+*.tfstate.*
+# Local provider plugins and cache.
+.terraform/
+# Variable files may hold environment-specific values/secrets.
+*.tfvars
+crash.log
+crash.*.log
+
+# The lock file IS committed (pins provider versions) — do not ignore it.
+!.terraform.lock.hcl

@@ -1,0 +1,6 @@
+# WireMock provider mock with the CEP mappings baked in, for the ECS sidecar.
+# Build from the repo root: docker build -f deploy/aws/Dockerfile.provider-mock .
+# The listen port is set by the ECS task command (--port 8081).
+FROM wiremock/wiremock:3.9.2
+
+COPY wiremock/mappings /home/wiremock/mappings
