@@ -118,9 +118,11 @@ Cobertura atual: **~99% linha / 100% branch**.
 
 ## Deploy (AWS)
 
-Produção em **AWS** — ECS Fargate + RDS Postgres + ElastiCache Redis + ALB —
-descrita em [ADR-0003](docs/ADR-0003-deploy-aws.md). O IaC (Terraform, skeleton)
-está em [`deploy/aws/terraform/`](deploy/aws/terraform/). Como a app é 12-factor e
+Deploy em **AWS** — ECS Fargate + RDS Postgres + ElastiCache Redis + ALB —
+descrito em [ADR-0003](docs/ADR-0003-deploy-aws.md), com o IaC (Terraform) em
+[`deploy/aws/terraform/`](deploy/aws/terraform/). Foi **aplicado e validado de
+ponta a ponta** na AWS (o WireMock roda como sidecar na task) e depois **destruído
+para não gerar custo** — reaplicável a qualquer momento. Como a app é 12-factor e
 stateless, a migração é de configuração/empacotamento — o núcleo não muda.
 
 ## Documentação
