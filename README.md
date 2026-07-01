@@ -82,6 +82,33 @@ curl http://localhost:8080/addresses/01001000
 Falhas do provedor retornam corpo **opaco** — nenhum nome de provedor, causa ou
 stack vaza; o detalhe fica no log interno.
 
+## Auditoria (log das consultas)
+
+Requisito do desafio: **toda consulta que alcança o cache ou o provedor é gravada
+no Postgres** com o horário (`queried_at`) e o retorno da API (payload cru na coluna
+`jsonb`). Consulta de formato inválido **não** é auditada — é barrada antes de
+qualquer integração (não houve "consulta" ao provedor).
+
+Não há endpoint para ler a auditoria (log interno não é feature de produto). Para
+inspecionar, consulte a tabela direto — útil na apresentação, logo após rodar
+alguns `GET /addresses/...`:
+
+```bash
+docker compose exec postgres psql -U card -d card_address \
+  -c "SELECT queried_at, cep, outcome, source, response_payload \
+      FROM cep_lookup_log ORDER BY queried_at DESC LIMIT 10;"
+```
+
+```
+          queried_at           |   cep    |    outcome     |  source  |               response_payload
+-------------------------------+----------+----------------+----------+-----------------------------------------------
+ 2026-07-01 22:04:24.087+00    | 12345677 | provider_error | provider |
+ 2026-07-01 22:04:24.039+00    | 12345674 | not_found      | provider |
+ 2026-07-01 22:04:23.846+00    | 01001000 | found          | provider | {"uf": "SP", "cep": "01001000", "bairro": ...}
+```
+
+O teste E2E também verifica isso automaticamente (consulta a tabela e assere a linha).
+
 ## Convenção do provedor mock
 
 Para testar todos os desfechos sem CEPs mágicos, o mock responde pelo **último
