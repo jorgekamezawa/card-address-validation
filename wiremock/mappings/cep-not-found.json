@@ -1,0 +1,10 @@
+{
+  "priority": 10,
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/ws/[0-9]{8}/json"
+  },
+  "response": {
+    "status": 404
+  }
+}

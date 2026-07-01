@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/ws/[0-9]{7}8/json"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    "fixedDelayMilliseconds": 5000,
+    "body": "{\"cep\":\"{{request.pathSegments.[1]}}\",\"logradouro\":\"Rua Lenta\",\"complemento\":\"\",\"bairro\":\"Centro\",\"cidade\":\"Fortaleza\",\"uf\":\"CE\"}"
+  }
+}

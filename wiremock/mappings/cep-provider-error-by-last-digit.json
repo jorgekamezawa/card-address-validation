@@ -1,0 +1,9 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/ws/[0-9]{7}7/json"
+  },
+  "response": {
+    "status": 500
+  }
+}
