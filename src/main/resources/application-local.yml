@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/card_address
+    username: card
+    password: card
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+provider:
+  cep:
+    base-url: http://localhost:8081
+
+cache:
+  cep:
+    ttl: 24h

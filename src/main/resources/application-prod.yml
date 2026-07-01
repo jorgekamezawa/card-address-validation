@@ -1,0 +1,6 @@
+# Production overrides. Structured (JSON) console logs for log aggregators;
+# every other profile keeps Spring's human-readable console (ADR-0002).
+logging:
+  structured:
+    format:
+      console: logstash

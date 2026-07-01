@@ -1,0 +1,35 @@
+# Test profile. DB/Redis connection values here are placeholders only —
+# @ServiceConnection (Testcontainers) overrides them with the real container.
+# The WireMock base-url is overridden per test via @DynamicPropertySource.
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test
+    username: test
+    password: test
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+provider:
+  cep:
+    base-url: http://localhost:8081
+
+cache:
+  cep:
+    ttl: 1m
+
+# Tight, deterministic circuit for tests: opens after 3 failing calls and
+# stays open (no auto half-open) so the fail-fast behavior can be asserted.
+resilience4j:
+  circuitbreaker:
+    instances:
+      cepProvider:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 3
+        minimum-number-of-calls: 3
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 60s
+        automatic-transition-from-open-to-half-open-enabled: false
+        record-exceptions:
+          - com.bank.cardaddressvalidation.domain.ProviderUnavailableException
